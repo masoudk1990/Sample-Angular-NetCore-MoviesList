@@ -7,9 +7,11 @@
 
     <h4>Select the location of the theater</h4>
 
-    <app-map [initialCoordinates]="initialCoordinates" (onSelectedLocation)="onSelectedLocation($event)"></app-map>
+    <div style="position: relative; width: 600px;">
+        <app-map [initialCoordinates]="initialCoordinates" (onSelectedLocation)="onSelectedLocation($event)"></app-map>
+    </div>
     
-    <div>
+    <div style="margin-top: 665px;">
         <button mat-flat-button color="primary" [disabled]="form.invalid">Save Changes</button>
         <a mat-stroked-button routerLink="/movie-theaters">Cancel</a>
     </div>

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { parseWebAPIErrors } from 'src/app/utilities/utils';
 import { genreCreationDTO } from '../genres.model';
+import { GenresService } from '../genres.service';
 
 @Component({
   selector: 'app-create-genre',
@@ -10,7 +12,9 @@ import { genreCreationDTO } from '../genres.model';
 })
 export class CreateGenreComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  errors: string[] = [];
+
+  constructor(private router: Router, private genreService: GenresService) { }
 
   form: FormGroup;
 
@@ -19,8 +23,9 @@ export class CreateGenreComponent implements OnInit {
   }
 
   saveChagnes(genreCreationDTO: genreCreationDTO){
-    //TODO: save changes
-    this.router.navigate(['/genres']);
+    this.genreService.create(genreCreationDTO).subscribe(() => {
+      this.router.navigate(['/genres']);
+    }, error => {this.errors = parseWebAPIErrors(error);});
   }
 
 }

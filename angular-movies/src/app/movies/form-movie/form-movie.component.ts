@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { actorsMovieDTO } from 'src/app/actors/actors.model';
 import { multipleSelectorModel } from 'src/app/utilities/multiple-selector/multiple-selector.model';
 import { movieCreationDTO, movieDTO } from '../movies.model';
 
@@ -15,24 +16,12 @@ export class FormMovieComponent implements OnInit {
   form: FormGroup
 
   @Input() model: movieDTO;
-
   @Output() onSaveChanges = new EventEmitter<movieCreationDTO>();
-
-  nonSelectedGenres: multipleSelectorModel[] = [
-    {key: 1, value: 'Drama'},
-    {key: 2, value: 'Action'},
-    {key: 3, value: 'Comedy'}
-  ];
-
-  SelectedGenres: multipleSelectorModel[] = [];  
-
-  nonSelectedMovieTheaters: multipleSelectorModel[] = [
-    {key: 1, value: 'Agora'},
-    {key: 2, value: 'Sambil'},
-    {key: 3, value: 'Megacentro'}
-  ];
-
-  SelectedMovieTheaters: multipleSelectorModel[] = [];
+  @Input() nonSelectedGenres: multipleSelectorModel[] = [];
+  @Input() selectedGenres: multipleSelectorModel[] = [];  
+  @Input() nonSelectedMovieTheaters: multipleSelectorModel[] = [];
+  @Input() selectedMovieTheaters: multipleSelectorModel[] = [];
+  @Input() selectedActors : actorsMovieDTO[] = [];
 
   ngOnInit(): void {
     this.form = this.formbuilder.group({
@@ -43,7 +32,8 @@ export class FormMovieComponent implements OnInit {
       releaseDate: '',
       poster: '',
       genresIds: '',
-      movieTheatersIds: ''
+      movieTheatersIds: '',
+      actors: ''
     });
 
     if (this.model !== undefined){
@@ -60,11 +50,11 @@ export class FormMovieComponent implements OnInit {
   }
 
   saveChanges() {
-    const genresIds = this.SelectedGenres.map(value => value.key);
-    this.form.get('genresIds')?.setValue(genresIds);
-
-    const movieTheatersIds = this.SelectedMovieTheaters.map(value => value.key);
-    this.form.get('movieTheatersIds')?.setValue(movieTheatersIds);
+    this.form.get('genresIds')?.setValue(this.selectedGenres.map(value => value.key));
+    this.form.get('movieTheatersIds')?.setValue(this.selectedMovieTheaters.map(value => value.key));
+    this.form.get('actors')?.setValue(this.selectedActors.map(val => {
+      return {id: val.id, character: val.character}
+    }))
 
     this.onSaveChanges.emit(this.form.value);
   }  

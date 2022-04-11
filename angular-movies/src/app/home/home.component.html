@@ -1,7 +1,7 @@
 <div class="container">
     <h2>In Theatre</h2>
-    <app-movies-list [movies]="moviesInTheaters"></app-movies-list>
+    <app-movies-list [movies]="moviesInTheaters" (onDelete)="OnDelete()"></app-movies-list>
     
     <h2>Future Releases</h2>
-    <app-movies-list [movies]="moviesFutureReleases"></app-movies-list>
+    <app-movies-list [movies]="moviesFutureReleases" (onDelete)="OnDelete()"></app-movies-list>
 </div>

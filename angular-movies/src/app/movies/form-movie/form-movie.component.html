@@ -28,13 +28,13 @@
     <app-input-markdown [markdownContent]="model?.summary" (changeMarkdown)="changeMarkdown($event)"></app-input-markdown>
 
     <h4>Select Genres</h4>
-    <app-multiple-selector [SelectedItems]="SelectedGenres" [NonSelectedItems]="nonSelectedGenres"></app-multiple-selector>
+    <app-multiple-selector [SelectedItems]="selectedGenres" [NonSelectedItems]="nonSelectedGenres"></app-multiple-selector>
 
     <h4>Select the Movie Theaters</h4>
-    <app-multiple-selector [SelectedItems]="SelectedMovieTheaters" [NonSelectedItems]="nonSelectedMovieTheaters"></app-multiple-selector>
+    <app-multiple-selector [SelectedItems]="selectedMovieTheaters" [NonSelectedItems]="nonSelectedMovieTheaters"></app-multiple-selector>
 
     <h4>Select the Actors</h4>
-    <app-actors-autocomplete></app-actors-autocomplete>
+    <app-actors-autocomplete [selectedActors]="selectedActors"></app-actors-autocomplete>
 
     <div>
         <button mat-flat-button color="primary" [disabled]="form.invalid">Save Changes</button>

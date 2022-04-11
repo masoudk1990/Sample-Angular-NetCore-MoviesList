@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { latLng, LeafletMouseEvent, marker, Marker, tileLayer } from 'leaflet';
-import { coordinatesMap } from './coordinate';
+import { coordinatesMap, coordinatesMapWithMessage } from './coordinate';
 
 @Component({
   selector: 'app-map',
@@ -12,10 +12,17 @@ export class MapComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.layers = this.initialCoordinates.map(value => marker([value.latitude, value.longitude]));
+    this.layers = this.initialCoordinates.map(value => {
+      const m = marker([value.latitude, value.longitude]);
+        if (value.message)
+          m.bindPopup(value.message, {autoClose: false, autoPan: false});
+      return m;
+    });
   }
 
-  @Input() initialCoordinates: coordinatesMap[] = [];
+  @Input() initialCoordinates: coordinatesMapWithMessage[] = [];
+
+  @Input() editMode: boolean = true;
 
   @Output() onSelectedLocation = new EventEmitter<coordinatesMap>();
 
@@ -30,12 +37,14 @@ export class MapComponent implements OnInit {
   layers: Marker<any>[] = [];
 
   handleMapClick(event: LeafletMouseEvent){
-    this.layers = [];
-    this.layers.push(marker(event.latlng));
-
-    const latitude = event.latlng.lat;
-    const longitude = event.latlng.lng;
-    this.onSelectedLocation.emit({latitude, longitude});
+    if (this.editMode){
+      this.layers = [];
+      this.layers.push(marker(event.latlng));
+  
+      const latitude = event.latlng.lat;
+      const longitude = event.latlng.lng;
+      this.onSelectedLocation.emit({latitude, longitude});
+    }
   }
 
 }

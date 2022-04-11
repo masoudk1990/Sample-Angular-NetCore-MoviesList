@@ -31,9 +31,14 @@ import { MovieTheaterFormComponent } from './movie-theaters/movie-theater-form/m
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { MapComponent } from './utilities/map/map.component'
 import "leaflet/dist/images/marker-shadow.png";
+import "leaflet/dist/images/marker-icon.png";
 import { FormMovieComponent } from './movies/form-movie/form-movie.component';
 import { MultipleSelectorComponent } from './utilities/multiple-selector/multiple-selector.component';
 import { ActorsAutocompleteComponent } from './actors/actors-autocomplete/actors-autocomplete.component';
+import { HttpClientModule } from '@angular/common/http';
+import { DisplayErrorsComponent } from './utilities/display-errors/display-errors.component';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { MovieDetailsComponent } from './movies/movie-details/movie-details.component'
 
 @NgModule({
   declarations: [
@@ -64,6 +69,8 @@ import { ActorsAutocompleteComponent } from './actors/actors-autocomplete/actors
     FormMovieComponent,
     MultipleSelectorComponent,
     ActorsAutocompleteComponent,
+    DisplayErrorsComponent,
+    MovieDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,7 +80,9 @@ import { ActorsAutocompleteComponent } from './actors/actors-autocomplete/actors
     MaterialModule,
     FormsModule,
     LeafletModule,
-    MarkdownModule.forRoot()
+    HttpClientModule,
+    MarkdownModule.forRoot(),
+    SweetAlert2Module.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
