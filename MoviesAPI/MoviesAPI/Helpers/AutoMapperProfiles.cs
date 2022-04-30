@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using MoviesAPI.DTOs;
 using MoviesAPI.Entities;
 using NetTopologySuite.Geometries;
@@ -18,6 +19,7 @@ namespace MoviesAPI.Helpers
             CreateMap<MovieTheaterCreationDTO, MovieTheater>().ForMember(x => x.Location, x => x.MapFrom(dto => geometryFactory.CreatePoint(new Coordinate(dto.Longitude, dto.Latitude))));
             CreateMap<MovieCreationDTO, Movie>().ForMember(x => x.Poster, options => options.Ignore()).ForMember(x => x.MoviesGenres, options => options.MapFrom(MapMoviesGenres)).ForMember(x => x.MovieTheatersMovies, options => options.MapFrom(MapMovieTheatersMovies)).ForMember(x => x.MoviesActors, options => options.MapFrom(MapMoviesActors));
             CreateMap<Movie, MovieDTO>().ForMember(x => x.Genres, options => options.MapFrom(MapMoviesGenres)).ForMember(x => x.MovieTheaters, options => options.MapFrom(MapMovieTheatersMovies)).ForMember(x => x.Actors, options => options.MapFrom(MapMoviesActors));
+            CreateMap<IdentityUser, UserDTO>();
         }
 
         private List<ActorsMovieDTO> MapMoviesActors(Movie movie, MovieDTO movieDTO)
